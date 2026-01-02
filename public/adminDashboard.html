@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>admin</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, sans-serif;
+      }
+    
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #1e3c72, #2a5298);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #fff;
+      }
+    
+      h1 {
+        width: 100%;
+        padding: 25px 0;
+        margin: 0;
+        text-align: center;
+        font-size: 3rem;
+        background: rgba(0, 0, 0, 0.25);
+        backdrop-filter: blur(6px);
+        letter-spacing: 1px;
+      }
+    
+      .main {
+        margin-top: 40px;
+        width: 90%;
+        max-width: 700px;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border-radius: 16px;
+        padding: 40px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+      }
+    
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+      }
+    
+      form div {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+    
+      label {
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+      }
+    
+      input[type="text"],
+      input[type="file"] {
+        padding: 10px 14px;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+        font-size: 1rem;
+      }
+    
+      input[type="text"]::placeholder {
+        color: #777;
+      }
+    
+      input[type="text"]:focus,
+      input[type="file"]:focus {
+        outline: 2px solid #4fc3f7;
+      }
+    
+      #submit {
+        margin-top: 35px;
+        width: 100%;
+        padding: 14px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        background: linear-gradient(135deg, #00c6ff, #0072ff);
+        color: #fff;
+        transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+      }
+    
+      #submit:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        opacity: 0.95;
+      }
+    
+      #submit:active {
+        transform: translateY(0);
+        box-shadow: none;
+      }
+    
+      @media (max-width: 600px) {
+        h1 {
+          font-size: 2.2rem;
+        }
+        .main {
+          padding: 25px;
+        }
+      }
+    </style>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+    <div class="main">
+        <form action="" class="area" id="upload" method="post" enctype="multipart/form-data">
+        <div>
+            <label for="file">image:-</label>
+            <input type="file"  style="height: 50px;" id="file" name="file" accept=".jpeg, .jpg, .png">
+        </div>
+        <div>
+            <label for="name" >Name:-</label>
+            <input type="text" placeholder="Enter your name here" style="height: 30px;" id="name" name="name">
+        </div>
+        <div>
+            <label for="option1" style="font-size: 1.2rem; margin-left: 25px;">option1:-</label>
+            <input type="text" placeholder="Enter option1 here" style="height: 30px;" id="option1" name="option1">
+        </div>
+        <div>
+            <label for="option2" style="font-size: 1.2rem; margin-left: 25px;">option2:-</label>
+            <input type="text" placeholder="Enter option2 here" style="height: 30px;" id="option2" name="option2">
+        </div>
+        <div>
+            <label for="option3" style="font-size: 1.2rem; margin-left: 25px;">option3:-</label>
+            <input type="text" placeholder="Enter option3 here" style="height: 30px;" id="option3" name="option3">
+        </div>
+        </form>
+        <button  id="submit" type="submit">Submit</button>
+    </div>
+    <script src="admin.js" type="module"></script>
+</body>
+</html>

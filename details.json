@@ -1,0 +1,48 @@
+{
+  "details": [
+    {
+      "id": 1766078679283,
+      "answer": "git",
+      "image": "https://res.cloudinary.com/dbompxovn/image/upload/v1766078678/uploads/ubvpivh1zgsmzqzybtqs.jpg",
+      "options": [
+        "vs code",
+        "chrome",
+        "google",
+        "git"
+      ]
+    },
+    {
+      "id": 1766119356537,
+      "answer": "Bike",
+      "image": "https://res.cloudinary.com/dbompxovn/image/upload/v1766119355/uploads/hpfxygrxglnqw2fyajhj.avif",
+      "options": [
+        "Car",
+        "Bus",
+        "Train",
+        "Bike"
+      ]
+    },
+    {
+      "id": 1766119482190,
+      "answer": "Sabith",
+      "image": "https://res.cloudinary.com/dbompxovn/image/upload/v1766119481/uploads/vo7eoczb9yorqiu1bvsj.jpg",
+      "options": [
+        "Abhinav",
+        "Harsh",
+        "Dinesh",
+        "Sabith"
+      ]
+    },
+    {
+      "id": 1766119518467,
+      "answer": "Abhinav",
+      "image": "https://res.cloudinary.com/dbompxovn/image/upload/v1766119517/uploads/exsjgdbjumzu0fwymafw.jpg",
+      "options": [
+        "Mohak",
+        "Akash",
+        "Harish",
+        "Abhinav"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quiz Results</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    table {
+      margin: auto;
+      border-collapse: collapse;
+      width: 50%;
+    }
+    th, td {
+      border: 1px solid #333;
+      padding: 10px;
+    }
+    th {
+      background: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Admin – Quiz Results</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Score</th>
+    </tr>
+  </thead>
+  <tbody id="resultsBody"></tbody>
+</table>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+  const tbody = document.getElementById("resultsBody");
+
+  socket.emit("getResults");
+
+  socket.on("quizResults", results => {
+    console.log("Admin results:", results);
+
+    for (const id in results) {
+      const user = results[id];
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td>${user.username}</td>
+        <td>${user.score}</td>
+      `;
+
+      tbody.appendChild(row);
+    }
+  });
+</script>
+
+</body>
+
+</html>

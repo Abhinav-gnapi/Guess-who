@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quiz Results</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    table {
+      margin: auto;
+      border-collapse: collapse;
+      width: 50%;
+    }
+    th, td {
+      border: 1px solid #333;
+      padding: 10px;
+    }
+    th {
+      background: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Quiz Results</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Score</th>
+      </tr>
+    </thead>
+    <tbody id="resultsBody"></tbody>
+  </table>
+
+  <script>
+    const results = JSON.parse(sessionStorage.getItem("quizResults")) || {};
+    const tbody = document.getElementById("resultsBody");
+    console.log("score- >" ,results)
+    for (const user in results) {
+      console.log(user)
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td>${results[user].username}</td>
+        <td>${results[user].score}</td>
+      `;
+
+      tbody.appendChild(row);
+    }
+  </script>
+
+</body>
+</html>

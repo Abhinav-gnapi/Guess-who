@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quiz Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="timer-container">
+  <svg class="timer" viewBox="0 0 100 100">
+    <circle class="bg" cx="50" cy="50" r="45"></circle>
+    <circle class="progress" cx="50" cy="50" r="45"></circle>
+  </svg>
+  <div id="timeText">0</div>
+</div>
+
+<img id="photo" src="https://via.placeholder.com/300" alt="Quiz Photo"><br>
+
+<div id="options"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

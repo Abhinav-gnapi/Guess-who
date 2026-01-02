@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="icon" type="image/icon" href="./git image1.jpg">
+    <style>
+        .title {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin-top: 15%;
+            row-gap: 5px;
+        }
+        .outer-box{
+            display: flex;
+            justify-content: center;
+            width: 200px;
+            border: 1px solid rgb(187, 182, 182);
+            border-radius: 4px;
+            padding: 20px;
+            background-color: rgb(242, 245, 245);
+            
+        }
+        form {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+
+        }
+        form label {
+            font-size: 13px;
+            font-family: Arial, Helvetica, sans-serif;
+            margin-bottom: 5px;
+            
+        }
+        form input{
+            width: 200px;
+        }
+        #login {
+            width: 208px;
+            background-color: rgb(33, 218, 153);
+            border: none;
+            border-radius: 3px;
+            color: white;
+            padding: 4px;
+            margin-top: 10px;
+        }
+        #login:hover{
+            transform: scale(102%);
+        }
+        img:hover {
+            transform: scale(105%);
+            transition: transform 3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="outer">
+        <div class="title">
+            <img src="./next_9653622.png" alt="git logo" height="80px">
+            <div class="outer-box">
+                <form>
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                    <!-- <a href="homePage.html"><input type="button" id="login" value="Login"></a> -->
+                     <input type="button" id="login" value="Login" onclick="validate()">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      function validate() {
+        const username = document.getElementById("username").value.trim();
+
+        if (!username) {
+          alert("Please enter a username");
+          return;
+        }
+
+        sessionStorage.setItem("username", username);
+
+        window.location.href = "/guessWho.html";
+    }
+</script>
+
+</body>
+</html>
