@@ -14,6 +14,9 @@ const io = new Server(server, {
   }
 });
 
+let usedPersonIds = new Set();
+let currentCorrectAnswer = null;
+
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
@@ -27,15 +30,49 @@ function readData() {
   return JSON.parse(data);
 }
 
+function shuffle(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
+
+function pickCorrectPerson(people) {
+  const available = people.filter(p => !usedPersonIds.has(p.id));
+
+  if (available.length === 0) {
+    usedPersonIds.clear(); // reset if all used
+    return people[Math.floor(Math.random() * people.length)];
+  }
+
+  return available[Math.floor(Math.random() * available.length)];
+}
+
+function generateOptions(correctPerson, people) {
+  // same gender first
+  let wrongOptions = people.filter(
+    p => p.gender === correctPerson.gender && p.id !== correctPerson.id
+  );
+
+  // fallback if not enough
+  if (wrongOptions.length < 3) {
+    wrongOptions = people.filter(p => p.id !== correctPerson.id);
+  }
+
+  wrongOptions = shuffle(wrongOptions).slice(0, 3);
+
+  return shuffle([
+    correctPerson.answer,
+    ...wrongOptions.map(p => p.answer)
+  ]);
+}
+
+
 function writeData(data) {
   fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
 }
 
 app.post("/details", (req, res) => {
-  console.log("POST /details hit", req.body);
-  const { answer, image, options } = req.body;
+  const { answer, image, gender } = req.body;
 
-  if (!answer || !image || !options) {
+  if (!answer || !image || !gender) {
     return res.status(400).json({ message: "Missing data" });
   }
 
@@ -45,17 +82,18 @@ app.post("/details", (req, res) => {
     id: Date.now(),
     answer,
     image,
-    options
+    gender
   };
 
   data.details.push(newEntry);
   writeData(data);
 
   res.status(201).json({
-    message: "Data saved successfully",
+    message: "Saved successfully",
     data: newEntry
   });
 });
+
 
 
 app.get("/details", (req, res) => {
@@ -82,20 +120,19 @@ io.on("connection", socket => {
   });
 
   socket.on("startQuiz", () => {
-    currentIndex = 0;
-    finalResults = null;
-    sendQuestion();
-  });
+  currentIndex = 0;
+  finalResults = null;
+  usedPersonIds.clear(); // reset repetition tracking
+  sendQuestion();
+});
+
 
   socket.on("submitAnswer", answer => {
-    const data = readData();
-    const questions = data.details;
-    const q = questions[currentIndex];
+  if (users[socket.id] && answer === currentCorrectAnswer) {
+    users[socket.id].score += 1;
+  }
+});
 
-    if (users[socket.id] && q && answer === q.answer) {
-      users[socket.id].score += 1;
-    }
-  });
 
   socket.on("getResults", () => {
     if (finalResults) {
@@ -112,25 +149,40 @@ io.on("connection", socket => {
 
 function sendQuestion() {
   const data = readData();
-  const questions = data.details;
+  const people = data.details;
 
-  if (currentIndex >= questions.length) {
+  if (people.length < 4) {
+    console.error("At least 4 entries required");
+    return;
+  }
+
+  if (usedPersonIds.size >= people.length) {
     finalResults = users;
     io.emit("quizEnd", users);
     return;
   }
 
+  const correctPerson = pickCorrectPerson(people);
+  usedPersonIds.add(correctPerson.id);
+
+  currentCorrectAnswer = correctPerson.answer; // ✅ STORE
+
+  const options = generateOptions(correctPerson, people);
+
   io.emit("newQuestion", {
-    question: questions[currentIndex],
+    question: {
+      image: correctPerson.image,
+      options,
+      answer: correctPerson.answer
+    },
     time: 15
   });
 
   clearTimeout(timer);
-  timer = setTimeout(() => {
-    currentIndex++;
-    sendQuestion();
-  }, 15000);
+  timer = setTimeout(sendQuestion, 15000);
 }
+
+
 
 
 app.delete("/details/:id", (req, res) => {

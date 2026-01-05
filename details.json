@@ -1,48 +1,58 @@
 {
   "details": [
     {
-      "id": 1766078679283,
-      "answer": "git",
-      "image": "https://res.cloudinary.com/dbompxovn/image/upload/v1766078678/uploads/ubvpivh1zgsmzqzybtqs.jpg",
-      "options": [
-        "vs code",
-        "chrome",
-        "google",
-        "git"
-      ]
-    },
-    {
-      "id": 1766119356537,
-      "answer": "Bike",
-      "image": "https://res.cloudinary.com/dbompxovn/image/upload/v1766119355/uploads/hpfxygrxglnqw2fyajhj.avif",
-      "options": [
-        "Car",
-        "Bus",
-        "Train",
-        "Bike"
-      ]
-    },
-    {
       "id": 1766119482190,
       "answer": "Sabith",
       "image": "https://res.cloudinary.com/dbompxovn/image/upload/v1766119481/uploads/vo7eoczb9yorqiu1bvsj.jpg",
-      "options": [
-        "Abhinav",
-        "Harsh",
-        "Dinesh",
-        "Sabith"
-      ]
+      "gender": "male"
     },
     {
       "id": 1766119518467,
       "answer": "Abhinav",
       "image": "https://res.cloudinary.com/dbompxovn/image/upload/v1766119517/uploads/exsjgdbjumzu0fwymafw.jpg",
-      "options": [
-        "Mohak",
-        "Akash",
-        "Harish",
-        "Abhinav"
-      ]
+      "gender": "male"
+    },
+    {
+      "id": 1767607629194,
+      "answer": "Smrithi Mandhana",
+      "image": "https://res.cloudinary.com/dbompxovn/image/upload/v1767607628/uploads/wy7vqdofwzt9ku1xgt0t.webp",
+      "gender": "female"
+    },
+    {
+      "id": 1767607655501,
+      "answer": "Messi",
+      "image": "https://res.cloudinary.com/dbompxovn/image/upload/v1767607654/uploads/fjuxjyowk93tw6z5lgra.webp",
+      "gender": "male"
+    },
+    {
+      "id": 1767607685129,
+      "answer": "Mille bobby brown",
+      "image": "https://res.cloudinary.com/dbompxovn/image/upload/v1767607684/uploads/f5rvplaw9ssxjouxbtdo.webp",
+      "gender": "female"
+    },
+    {
+      "id": 1767608116117,
+      "answer": "Nadasha romanoff",
+      "image": "https://res.cloudinary.com/dbompxovn/image/upload/v1767608115/uploads/thlucd3ef9w3kwu81kci.webp",
+      "gender": "female"
+    },
+    {
+      "id": 1767608129474,
+      "answer": "Dhanush",
+      "image": "https://res.cloudinary.com/dbompxovn/image/upload/v1767608128/uploads/oywdd2nivxmchwwmhvx2.jpg",
+      "gender": "male"
+    },
+    {
+      "id": 1767608171819,
+      "answer": "Shah Rukh Khan ",
+      "image": "https://res.cloudinary.com/dbompxovn/image/upload/v1767608170/uploads/swmqftgyfmdeonaa7jt3.webp",
+      "gender": "male"
+    },
+    {
+      "id": 1767608298944,
+      "answer": "Shreya Ghoshal",
+      "image": "https://res.cloudinary.com/dbompxovn/image/upload/v1767608297/uploads/ervf5qmhyjrjggfxnlgr.jpg",
+      "gender": "female"
     }
   ]
 }
