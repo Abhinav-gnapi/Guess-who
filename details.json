@@ -1,58 +1,60 @@
 {
   "details": [
     {
-      "id": 1766119482190,
-      "answer": "Sabith",
-      "image": "https://res.cloudinary.com/dbompxovn/image/upload/v1766119481/uploads/vo7eoczb9yorqiu1bvsj.jpg",
-      "gender": "male"
-    },
-    {
-      "id": 1766119518467,
-      "answer": "Abhinav",
-      "image": "https://res.cloudinary.com/dbompxovn/image/upload/v1766119517/uploads/exsjgdbjumzu0fwymafw.jpg",
-      "gender": "male"
-    },
-    {
-      "id": 1767607629194,
-      "answer": "Smrithi Mandhana",
-      "image": "https://res.cloudinary.com/dbompxovn/image/upload/v1767607628/uploads/wy7vqdofwzt9ku1xgt0t.webp",
-      "gender": "female"
-    },
-    {
-      "id": 1767607655501,
-      "answer": "Messi",
-      "image": "https://res.cloudinary.com/dbompxovn/image/upload/v1767607654/uploads/fjuxjyowk93tw6z5lgra.webp",
-      "gender": "male"
-    },
-    {
-      "id": 1767607685129,
-      "answer": "Mille bobby brown",
-      "image": "https://res.cloudinary.com/dbompxovn/image/upload/v1767607684/uploads/f5rvplaw9ssxjouxbtdo.webp",
-      "gender": "female"
-    },
-    {
-      "id": 1767608116117,
-      "answer": "Nadasha romanoff",
-      "image": "https://res.cloudinary.com/dbompxovn/image/upload/v1767608115/uploads/thlucd3ef9w3kwu81kci.webp",
-      "gender": "female"
-    },
-    {
-      "id": 1767608129474,
-      "answer": "Dhanush",
-      "image": "https://res.cloudinary.com/dbompxovn/image/upload/v1767608128/uploads/oywdd2nivxmchwwmhvx2.jpg",
-      "gender": "male"
-    },
-    {
-      "id": 1767608171819,
-      "answer": "Shah Rukh Khan ",
-      "image": "https://res.cloudinary.com/dbompxovn/image/upload/v1767608170/uploads/swmqftgyfmdeonaa7jt3.webp",
-      "gender": "male"
-    },
-    {
-      "id": 1767608298944,
+      "id": 1767765228480,
       "answer": "Shreya Ghoshal",
-      "image": "https://res.cloudinary.com/dbompxovn/image/upload/v1767608297/uploads/ervf5qmhyjrjggfxnlgr.jpg",
+      "image1": "https://res.cloudinary.com/dbompxovn/image/upload/v1767765227/uploads/e5oe6spmktivlo5spon3.jpg",
+      "image2": "https://res.cloudinary.com/dbompxovn/image/upload/v1767765228/uploads/inwgoypzlibx6aiflhmb.jpg",
       "gender": "female"
+    },
+    {
+      "id": 1767765315778,
+      "answer": "Nadasha Romanoff",
+      "image1": "https://res.cloudinary.com/dbompxovn/image/upload/v1767765314/uploads/efn8jx93k8arllbqu2pd.jpg",
+      "image2": "https://res.cloudinary.com/dbompxovn/image/upload/v1767765315/uploads/g6pe13wacmthlnrhl5jl.webp",
+      "gender": "female"
+    },
+    {
+      "id": 1767765343924,
+      "answer": "Mille Bobby Brown",
+      "image1": "https://res.cloudinary.com/dbompxovn/image/upload/v1767765343/uploads/mlfy2peuidkld96uequu.webp",
+      "image2": "https://res.cloudinary.com/dbompxovn/image/upload/v1767765343/uploads/t4kexpvdyw1hnd4ga6c4.webp",
+      "gender": "female"
+    },
+    {
+      "id": 1767765371915,
+      "answer": "Smrithi Mandhana",
+      "image1": "https://res.cloudinary.com/dbompxovn/image/upload/v1767765371/uploads/hyvhdwaagomp6znny4bd.avif",
+      "image2": "https://res.cloudinary.com/dbompxovn/image/upload/v1767765371/uploads/zfd69zfjo7ceyrwixxef.webp",
+      "gender": "female"
+    },
+    {
+      "id": 1767765393655,
+      "answer": "Dhanush",
+      "image1": "https://res.cloudinary.com/dbompxovn/image/upload/v1767765393/uploads/rzjykn30rfrsebx736a2.webp",
+      "image2": "https://res.cloudinary.com/dbompxovn/image/upload/v1767765393/uploads/n7tb0vp84bcjfiobcm4o.jpg",
+      "gender": "male"
+    },
+    {
+      "id": 1767765417721,
+      "answer": "Shah Rukh Khan",
+      "image1": "https://res.cloudinary.com/dbompxovn/image/upload/v1767765417/uploads/d0tsciknm39iirx9xuir.jpg",
+      "image2": "https://res.cloudinary.com/dbompxovn/image/upload/v1767765417/uploads/otpp56hqzjc8mga80xlt.webp",
+      "gender": "male"
+    },
+    {
+      "id": 1767765446159,
+      "answer": "Lional Messi",
+      "image1": "https://res.cloudinary.com/dbompxovn/image/upload/v1767765445/uploads/iw3kikmskpfstqneamjj.avif",
+      "image2": "https://res.cloudinary.com/dbompxovn/image/upload/v1767765445/uploads/ufltvg3sw7xcwsmct2d2.webp",
+      "gender": "male"
+    },
+    {
+      "id": 1767765742990,
+      "answer": "Virat Kohli",
+      "image1": "https://res.cloudinary.com/dbompxovn/image/upload/v1767765742/uploads/niijzehzkaswxpzxhp1h.webp",
+      "image2": "https://res.cloudinary.com/dbompxovn/image/upload/v1767765742/uploads/sfsxhnbgpa50jbv8noye.jpg",
+      "gender": "male"
     }
   ]
 }

@@ -70,9 +70,9 @@ function writeData(data) {
 }
 
 app.post("/details", (req, res) => {
-  const { answer, image, gender } = req.body;
+  const { answer, image1, image2, gender } = req.body;
 
-  if (!answer || !image || !gender) {
+  if (!answer || !image1 || !image2 || !gender) {
     return res.status(400).json({ message: "Missing data" });
   }
 
@@ -81,7 +81,8 @@ app.post("/details", (req, res) => {
   const newEntry = {
     id: Date.now(),
     answer,
-    image,
+    image1,
+    image2,
     gender
   };
 
@@ -89,7 +90,7 @@ app.post("/details", (req, res) => {
   writeData(data);
 
   res.status(201).json({
-    message: "Saved successfully",
+    message: "Data saved successfully",
     data: newEntry
   });
 });
@@ -171,7 +172,8 @@ function sendQuestion() {
 
   io.emit("newQuestion", {
     question: {
-      image: correctPerson.image,
+      image1: correctPerson.image1,
+      image2: correctPerson.image2,
       options,
       answer: correctPerson.answer
     },

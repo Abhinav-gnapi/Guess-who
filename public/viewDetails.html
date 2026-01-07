@@ -119,8 +119,11 @@
           name.textContent = item.answer;
 
           const img = document.createElement("img");
-          img.src = item.image;
+          img.src = item.image1;
           img.alt = item.answer;
+          const img2 = document.createElement("img");
+          img2.src = item.image2;
+          img2.alt = item.answer;
 
           const delBtn = document.createElement("button");
           delBtn.textContent = "Delete";
@@ -129,8 +132,8 @@
 
           card.appendChild(name);
           card.appendChild(img);
+          card.appendChild(img2);
           card.appendChild(delBtn);
-
           content.appendChild(card);
         });
       }

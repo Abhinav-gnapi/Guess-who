@@ -77,6 +77,15 @@
       input[type="file"]:focus {
         outline: 2px solid #4fc3f7;
       }
+
+      select {
+      font-size: 1rem;
+      outline: none;
+      }
+
+      select:focus {
+      outline: 2px solid #4fc3f7;
+      }
     
       #submit {
         margin-top: 35px;
@@ -119,16 +128,21 @@
         <form action="" class="area" id="upload" method="post" enctype="multipart/form-data">
         <div>
             <label for="file">Image:-</label>
-            <input type="file"  style="height: 50px;" id="file" name="file" accept=".jpeg, .jpg, .png">
+            <input type="file"  style="height: 50px;" id="file" name="file" accept=".jpeg, .jpg, .png" multiple >
         </div>
         <div>
             <label for="name" >Name:-</label>
             <input type="text" placeholder="Enter your name here" style="height: 30px;" id="name" name="name">
         </div>
         <div>
-            <label for="gender" >Gender:-</label>
-            <input type="text" placeholder="Enter gender here" style="height: 30px;" id="gender" name="gender">
-        </div>
+      <label for="gender">Gender:-</label>
+      <select id="gender" name="gender" style="height: 40px; border-radius: 8px; border: none; padding: 8px;">
+          <option value="">-- Select Gender --</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+      </select>
+</div>
+
         </form>
         <button  id="submit" type="submit">Submit</button>
     </div>

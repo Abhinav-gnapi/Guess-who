@@ -137,3 +137,15 @@ body {
         min-width: unset;
       }
     }
+
+  #imageContainer {
+  display: flex;
+  column-gap: 50px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+#imageContainer img {
+  width: 300px;
+  border-radius: 12px;
+}
