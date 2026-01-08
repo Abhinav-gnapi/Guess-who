@@ -17,12 +17,7 @@ const io = new Server(server, {
 let usedPersonIds = new Set();
 let currentCorrectAnswer = null;
 
-let adminResults = { results: {} };
-
-
 const PORT = process.env.PORT || 3000;
-
-
 
 app.use(cors());
 app.use(express.json());
@@ -101,9 +96,9 @@ app.post("/details", (req, res) => {
 });
 
 
-app.get("/admin/results", (req, res) => {
-  res.json(adminResults);
-});
+// app.get("/admin/results", (req, res) => {
+//   res.json(adminResults);
+// });
 
 
 // app.delete("/admin/results", (req, res) => {
@@ -153,6 +148,7 @@ io.on("connection", socket => {
 
   socket.on("getResults", () => {
     if (finalResults) {
+      console.log(finalResults);
       socket.emit("quizResults", finalResults);
     }
   });
@@ -168,18 +164,21 @@ function sendQuestion() {
   const data = readData();
   const people = data.details;
 
-  if (people.length < 4) {
+  if (people.length < 2) {
     console.error("At least 4 entries required");
     return;
   }
 
   if (usedPersonIds.size >= people.length) {
+  console.log(users);
+  console.log(finalResults);
   finalResults = users;
+  console.log(finalResults);
 
-  adminResults = {
-    results: users,
-    endedAt: new Date()
-  };
+  // adminResults = {
+  //   results: users,
+  //   endedAt: new Date()
+  // };
 
   io.emit("quizEnd", users);
   return;
