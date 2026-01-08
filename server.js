@@ -95,6 +95,21 @@ app.post("/details", (req, res) => {
   });
 });
 
+app.post("/admin/results", (req, res) => {
+  const { gameId, results, submittedAt } = req.body;
+
+  console.log("Admin received results:", results);
+
+  // Save to DB (MongoDB / PostgreSQL / etc.)
+  // OR temporarily store in memory
+
+  res.json({ success: true });
+});
+
+app.get("/admin/results", (req, res) => {
+  res.json(savedResults);
+});
+
 
 
 app.get("/details", (req, res) => {

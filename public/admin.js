@@ -69,5 +69,12 @@ function Myfunction() {
       file1.value = "";
     })
     .catch(err => console.error("Error:", err));
+
+  fetch("https://your-backend-name.onrender.com/admin/results")
+  .then(res => res.json())
+  .then(data => {
+    console.log("Admin Results:", data);
+  });
+
 }
 
