@@ -25,37 +25,72 @@
 
 <h1>Admin – Quiz Results</h1>
 
+
 <table>
-    <thead>
-      <tr>
-        <th>User</th>
-        <th>Score</th>
-      </tr>
-    </thead>
-    <tbody id="resultsBody"></tbody>
-  </table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Score</th>
+    </tr>
+  </thead>
+  <tbody id="resultsBody"></tbody>
+</table>
 
-  <script>
+<button id="clearBtn">Clear Results</button>
+
+<script>
   const tbody = document.getElementById("resultsBody");
+  const clearBtn = document.getElementById("clearBtn");
 
-  fetch("https://guess-who-amw8.onrender.com/admin/results")
-    .then(res => res.json())
-    .then(data => {
-      data.forEach(entry => {
-        for (const user in entry.results) {
+  function loadResults() {
+    tbody.innerHTML = "";
+
+    fetch("https://guess-who-amw8.onrender.com/admin/results")
+      .then(res => res.json())
+      .then(data => {
+        let leaderboard = [];
+
+        // collect all players
+        data.forEach(entry => {
+          for (const userId in entry.results) {
+            leaderboard.push({
+              username: entry.results[userId].username,
+              score: entry.results[userId].score
+            });
+          }
+        });
+
+        // 🔥 SORT by score (HIGH → LOW)
+        leaderboard.sort((a, b) => b.score - a.score);
+
+        // render
+        leaderboard.forEach(player => {
           const row = document.createElement("tr");
           row.innerHTML = `
-            <td>${entry.results[user].username}</td>
-            <td>${entry.results[user].score}</td>
+            <td>${player.username}</td>
+            <td>${player.score}</td>
           `;
           tbody.appendChild(row);
-        }
-      });
+        });
+      })
+      .catch(err => console.error("Admin fetch error:", err));
+  }
+
+  clearBtn.addEventListener("click", () => {
+    if (!confirm("Clear all results?")) return;
+
+    fetch("https://guess-who-amw8.onrender.com/admin/results", {
+      method: "DELETE"
     })
-    .catch(err => console.error("Admin fetch error:", err));
+      .then(res => res.json())
+      .then(() => {
+        tbody.innerHTML = "";
+        alert("Results cleared");
+      });
+  });
+
+  loadResults();
 </script>
 
-
 </body>
-
 </html>

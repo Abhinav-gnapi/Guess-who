@@ -16,11 +16,10 @@ const io = new Server(server, {
 
 let usedPersonIds = new Set();
 let currentCorrectAnswer = null;
+let adminResults = [];
 
 const PORT = process.env.PORT || 3000;
 
-let adminResults = [];
-let clearResultsTimer = null;
 
 
 app.use(cors());
@@ -127,6 +126,13 @@ app.post("/admin/results", (req, res) => {
 
 app.get("/admin/results", (req, res) => {
   res.json(adminResults);
+});
+
+
+app.delete("/admin/results", (req, res) => {
+  adminResults = [];
+  console.log("Admin cleared all results");
+  res.json({ cleared: true });
 });
 
 
