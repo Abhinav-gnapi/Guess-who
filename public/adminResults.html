@@ -37,46 +37,36 @@
 </table>
 
 <!-- <button id="clearBtn">Clear Results</button> -->
-
+<script src="/socket.io/socket.io.js"></script>
 <script>
   const tbody = document.getElementById("resultsBody");
+  const socket = io("https://guess-who-amw8.onrender.com");
 
-  function loadResults() {
-    fetch("https://guess-who-amw8.onrender.com/admin/results")
-      .then(res => res.json())
-      .then(data => {
-        tbody.innerHTML = "";
+  socket.on("quizEnd", results => {
+    tbody.innerHTML = "";
 
-        if (!data || !data.results || Object.keys(data.results).length === 0) {
-          return;
-        }
+    let leaderboard = [];
 
-        let leaderboard = [];
-
-        for (const id in data.results) {
-          leaderboard.push({
-            username: data.results[id].username,
-            score: data.results[id].score
-          });
-        }
-
-        leaderboard.sort((a, b) => b.score - a.score);
-
-        leaderboard.forEach(player => {
-          const row = document.createElement("tr");
-          row.innerHTML = `
-            <td>${player.username}</td>
-            <td>${player.score}</td>
-          `;
-          tbody.appendChild(row);
-        });
+    for (const id in results) {
+      leaderboard.push({
+        username: results[id].username,
+        score: results[id].score
       });
-  }
+    }
 
-  setInterval(loadResults, 3000);
-  
-  loadResults();
+    leaderboard.sort((a, b) => b.score - a.score);
+
+    leaderboard.forEach(player => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${player.username}</td>
+        <td>${player.score}</td>
+      `;
+      tbody.appendChild(row);
+    });
+  });
 </script>
+
 
 
 </body>
