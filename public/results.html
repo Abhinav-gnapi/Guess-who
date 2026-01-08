@@ -47,22 +47,6 @@
     `;
     tbody.appendChild(row);
   }
-
-  // 🔥 SEND RESULTS TO ADMIN (BACKEND)
-  fetch("https://guess-who-amw8.onrender.com/admin/results", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      gameId: "quiz-001",   // optional
-      results: results,
-      submittedAt: new Date()
-    })
-  })
-  .then(res => res.json())
-  .then(data => console.log("Results sent to admin"))
-  .catch(err => console.error("Error sending results:", err));
 </script>
 
 

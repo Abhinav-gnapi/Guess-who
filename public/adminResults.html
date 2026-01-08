@@ -36,61 +36,39 @@
   <tbody id="resultsBody"></tbody>
 </table>
 
-<button id="clearBtn">Clear Results</button>
+<!-- <button id="clearBtn">Clear Results</button> -->
 
 <script>
   const tbody = document.getElementById("resultsBody");
-  const clearBtn = document.getElementById("clearBtn");
 
-  function loadResults() {
-    tbody.innerHTML = "";
+  fetch("https://guess-who-amw8.onrender.com/admin/results")
+    .then(res => res.json())
+    .then(data => {
+      if (!data || !data.results) return;
 
-    fetch("https://guess-who-amw8.onrender.com/admin/results")
-      .then(res => res.json())
-      .then(data => {
-        let leaderboard = [];
+      let leaderboard = [];
 
-        // collect all players
-        data.forEach(entry => {
-          for (const userId in entry.results) {
-            leaderboard.push({
-              username: entry.results[userId].username,
-              score: entry.results[userId].score
-            });
-          }
+      for (const id in data.results) {
+        leaderboard.push({
+          username: data.results[id].username,
+          score: data.results[id].score
         });
+      }
 
-        // 🔥 SORT by score (HIGH → LOW)
-        leaderboard.sort((a, b) => b.score - a.score);
+      // sort high → low
+      leaderboard.sort((a, b) => b.score - a.score);
 
-        // render
-        leaderboard.forEach(player => {
-          const row = document.createElement("tr");
-          row.innerHTML = `
-            <td>${player.username}</td>
-            <td>${player.score}</td>
-          `;
-          tbody.appendChild(row);
-        });
-      })
-      .catch(err => console.error("Admin fetch error:", err));
-  }
-
-  clearBtn.addEventListener("click", () => {
-    if (!confirm("Clear all results?")) return;
-
-    fetch("https://guess-who-amw8.onrender.com/admin/results", {
-      method: "DELETE"
-    })
-      .then(res => res.json())
-      .then(() => {
-        tbody.innerHTML = "";
-        alert("Results cleared");
+      leaderboard.forEach(player => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${player.username}</td>
+          <td>${player.score}</td>
+        `;
+        tbody.appendChild(row);
       });
-  });
-
-  loadResults();
+    });
 </script>
+
 
 </body>
 </html>

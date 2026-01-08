@@ -16,7 +16,8 @@ const io = new Server(server, {
 
 let usedPersonIds = new Set();
 let currentCorrectAnswer = null;
-let adminResults = [];
+let adminResults = null;
+
 
 const PORT = process.env.PORT || 3000;
 
@@ -129,11 +130,11 @@ app.get("/admin/results", (req, res) => {
 });
 
 
-app.delete("/admin/results", (req, res) => {
-  adminResults = [];
-  console.log("Admin cleared all results");
-  res.json({ cleared: true });
-});
+// app.delete("/admin/results", (req, res) => {
+//   adminResults = null;
+//   console.log("Admin cleared all results");
+//   res.json({ cleared: true });
+// });
 
 
 app.get("/details", (req, res) => {
@@ -197,10 +198,17 @@ function sendQuestion() {
   }
 
   if (usedPersonIds.size >= people.length) {
-    finalResults = users;
-    io.emit("quizEnd", users);
-    return;
-  }
+  finalResults = users;
+
+  adminResults = {
+    results: users,
+    endedAt: new Date()
+  };
+
+  io.emit("quizEnd", users);
+  return;
+}
+
 
   const correctPerson = pickCorrectPerson(people);
   usedPersonIds.add(correctPerson.id);
