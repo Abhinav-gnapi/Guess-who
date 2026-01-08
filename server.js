@@ -121,14 +121,14 @@ let finalResults = null;
 
 
 io.on("connection", socket => {
-
+  console.log("Connected:", socket.id);
 
   socket.on("registerUser", username => {
     users[socket.id] = {
       username,
       score: 0
     };
-
+     console.log("User registered:", username);
   });
 
   socket.on("startQuiz", () => {
@@ -148,13 +148,13 @@ io.on("connection", socket => {
 
   socket.on("getResults", () => {
     if (finalResults) {
-      console.log(finalResults);
+      console.log('getResults',finalResults);
       socket.emit("quizResults", finalResults);
     }
   });
 
   socket.on("disconnect", () => {
-
+    console.log("Disconnected:", socket.id);
     delete users[socket.id];
   });
 });
@@ -170,10 +170,10 @@ function sendQuestion() {
   }
 
   if (usedPersonIds.size >= people.length) {
-  console.log(users);
-  console.log(finalResults);
+  console.log('Users',users);
+  console.log('Null',finalResults);
   finalResults = users;
-  console.log(finalResults);
+  console.log('Final',finalResults);
 
   // adminResults = {
   //   results: users,
@@ -232,5 +232,5 @@ app.delete("/details/:id", (req, res) => {
 
 
 server.listen(PORT, () => {
-  // console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

@@ -37,24 +37,27 @@
 </table>
 
 <!-- <button id="clearBtn">Clear Results</button> -->
-<script src="/socket.io/socket.io.js"></script>
+
 <script>
   const tbody = document.getElementById("resultsBody");
+  const statusText = document.getElementById("status");
+
+  // CONNECT TO SERVER
   const socket = io("https://guess-who-amw8.onrender.com");
 
-  socket.on("quizEnd", results => {
+  // LISTEN FOR FINAL RESULTS
+  socket.on("quizEnd", users => {
     tbody.innerHTML = "";
+    statusText.innerText = "Quiz finished";
 
-    let leaderboard = [];
-
-    for (const id in results) {
-      leaderboard.push({
-        username: results[id].username,
-        score: results[id].score
-      });
+    if (!users || Object.keys(users).length === 0) {
+      statusText.innerText = "No players participated";
+      return;
     }
 
-    leaderboard.sort((a, b) => b.score - a.score);
+    // Convert users object → array
+    const leaderboard = Object.values(users)
+      .sort((a, b) => b.score - a.score);
 
     leaderboard.forEach(player => {
       const row = document.createElement("tr");
@@ -65,9 +68,7 @@
       tbody.appendChild(row);
     });
   });
+
 </script>
-
-
-
 </body>
 </html>

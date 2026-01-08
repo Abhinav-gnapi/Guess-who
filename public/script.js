@@ -82,7 +82,6 @@ function startCountdown(time) {
 
 socket.on("quizEnd", (scores) => {
   console.log("Received scores:", scores);
-
   sessionStorage.setItem("quizResults", JSON.stringify(scores));
 
   alert("Quiz Finished!");
