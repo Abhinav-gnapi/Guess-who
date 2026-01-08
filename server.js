@@ -16,6 +16,8 @@ const io = new Server(server, {
 
 let usedPersonIds = new Set();
 let currentCorrectAnswer = null;
+let finalResults = null;
+
 
 const PORT = process.env.PORT || 3000;
 
@@ -100,14 +102,6 @@ app.post("/details", (req, res) => {
 //   res.json(adminResults);
 // });
 
-
-// app.delete("/admin/results", (req, res) => {
-//   adminResults = null;
-
-//   res.json({ cleared: true });
-// });
-
-
 app.get("/details", (req, res) => {
   const data = readData();
   res.json(data.details);
@@ -117,7 +111,7 @@ app.get("/details", (req, res) => {
 let currentIndex = 0;
 let timer = null;
 let users = {};
-let finalResults = null;
+// let finalResults = null;
 
 
 io.on("connection", socket => {
@@ -146,13 +140,6 @@ io.on("connection", socket => {
 });
 
 
-  socket.on("getResults", () => {
-    if (finalResults) {
-      console.log('getResults',finalResults);
-      socket.emit("quizResults", finalResults);
-    }
-  });
-
   socket.on("disconnect", () => {
     console.log("Disconnected:", socket.id);
     delete users[socket.id];
@@ -170,20 +157,10 @@ function sendQuestion() {
   }
 
   if (usedPersonIds.size >= people.length) {
-  console.log('Users',users);
-  console.log('Null',finalResults);
   finalResults = users;
-  console.log('Final',finalResults);
-
-  // adminResults = {
-  //   results: users,
-  //   endedAt: new Date()
-  // };
-
   io.emit("quizEnd", users);
   return;
-}
-
+  }
 
   const correctPerson = pickCorrectPerson(people);
   usedPersonIds.add(correctPerson.id);
@@ -206,6 +183,12 @@ function sendQuestion() {
   timer = setTimeout(sendQuestion, 15000);
 }
 
+app.get("/admin/results", (req, res) => {
+  if (!finalResults) {
+    return res.json({});
+  }
+  res.json(finalResults);
+});
 
 
 
