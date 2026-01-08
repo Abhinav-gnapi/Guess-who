@@ -48,7 +48,7 @@ function Myfunction() {
       const imageUrl1 = data1.secure_url;
       const imageUrl2 = data2.secure_url;
 
-      return fetch("https://guess-who-amw8.onrender.com/", {
+      return fetch("https://guess-who-amw8.onrender.com/details", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
