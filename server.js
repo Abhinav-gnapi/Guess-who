@@ -16,10 +16,11 @@ const io = new Server(server, {
 
 let usedPersonIds = new Set();
 let currentCorrectAnswer = null;
-let finalResults = null;
-
+let adminResults = [];
 
 const PORT = process.env.PORT || 3000;
+
+
 
 app.use(cors());
 app.use(express.json());
@@ -96,6 +97,44 @@ app.post("/details", (req, res) => {
     data: newEntry
   });
 });
+
+app.post("/admin/results", (req, res) => {
+  const { gameId, results, submittedAt } = req.body;
+
+  if (!results) {
+    return res.status(400).json({ message: "No results received" });
+  }
+
+  adminResults.push({
+    gameId,
+    results,
+    submittedAt
+  });
+
+  // ⏱ auto-clear after 5 minutes of inactivity
+  // if (clearResultsTimer) clearTimeout(clearResultsTimer);
+
+  // clearResultsTimer = setTimeout(() => {
+  //   adminResults = [];
+  //   console.log("Admin results auto-cleared");
+  // }, 5 * 60 * 1000);
+
+  console.log("Results saved for admin");
+  res.json({ success: true });
+});
+
+
+app.get("/admin/results", (req, res) => {
+  res.json(adminResults);
+});
+
+
+app.delete("/admin/results", (req, res) => {
+  adminResults = [];
+  console.log("Admin cleared all results");
+  res.json({ cleared: true });
+});
+
 
 app.get("/details", (req, res) => {
   const data = readData();

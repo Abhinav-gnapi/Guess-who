@@ -25,8 +25,7 @@
 
 <h1>Admin – Quiz Results</h1>
 
-
-<table>
+<table> 
   <thead>
     <tr>
       <th>User</th>
@@ -43,20 +42,30 @@
     tbody.innerHTML = "";
 
     fetch("https://guess-who-amw8.onrender.com/admin/results")
-  .then(res => res.json())
-  .then(data => {
-    tbody.innerHTML = "";
+      .then(res => res.json())
+      .then(data => {
+        let leaderboard = [];
 
-    const leaderboard = Object.values(data)
-      .sort((a, b) => b.score - a.score);
+        // collect all players
+        data.forEach(entry => {
+          for (const userId in entry.results) {
+            leaderboard.push({
+              username: entry.results[userId].username,
+              score: entry.results[userId].score
+            });
+          }
+        });
+
+        // 🔥 SORT by score (HIGH → LOW)
+        leaderboard.sort((a, b) => b.score - a.score);
 
     leaderboard.forEach(player => {
       const row = document.createElement("tr");
       row.innerHTML = `
         <td>${player.username}</td>
-        <td>${player.score}</td>
-      `;
-      tbody.appendChild(row);
+            <td>${player.score}</td>
+          `;
+          tbody.appendChild(row);
     });
   })
   .catch(err => console.error(err));
