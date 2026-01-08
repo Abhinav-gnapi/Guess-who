@@ -97,11 +97,6 @@ app.post("/details", (req, res) => {
   });
 });
 
-
-// app.get("/admin/results", (req, res) => {
-//   res.json(adminResults);
-// });
-
 app.get("/details", (req, res) => {
   const data = readData();
   res.json(data.details);
@@ -111,7 +106,6 @@ app.get("/details", (req, res) => {
 let currentIndex = 0;
 let timer = null;
 let users = {};
-// let finalResults = null;
 
 
 io.on("connection", socket => {
@@ -122,29 +116,33 @@ io.on("connection", socket => {
       username,
       score: 0
     };
-     console.log("User registered:", username);
+    console.log("User registered:", username);
   });
 
   socket.on("startQuiz", () => {
-  currentIndex = 0;
-  finalResults = null;
-  usedPersonIds.clear(); // reset repetition tracking
-  sendQuestion();
-});
-
+    finalResults = null;
+    usedPersonIds.clear();
+    sendQuestion();
+  });
 
   socket.on("submitAnswer", answer => {
-  if (users[socket.id] && answer === currentCorrectAnswer) {
-    users[socket.id].score += 1;
-  }
-});
+    if (users[socket.id] && answer === currentCorrectAnswer) {
+      users[socket.id].score += 1;
+    }
+  });
 
+  // ✅ ADMIN ENDS QUIZ
+  socket.on("endQuiz", () => {
+    finalResults = users;
+    io.emit("quizEnd", users);
+    console.log("Quiz ended. Final results:", finalResults);
+  });
 
   socket.on("disconnect", () => {
     console.log("Disconnected:", socket.id);
-    delete users[socket.id];
   });
 });
+
 
 
 function sendQuestion() {
@@ -152,20 +150,14 @@ function sendQuestion() {
   const people = data.details;
 
   if (people.length < 2) {
-    console.error("At least 4 entries required");
+    console.error("At least 2 entries required");
     return;
-  }
-
-  if (usedPersonIds.size >= people.length) {
-  finalResults = users;
-  io.emit("quizEnd", users);
-  return;
   }
 
   const correctPerson = pickCorrectPerson(people);
   usedPersonIds.add(correctPerson.id);
 
-  currentCorrectAnswer = correctPerson.answer; // ✅ STORE
+  currentCorrectAnswer = correctPerson.answer;
 
   const options = generateOptions(correctPerson, people);
 
@@ -173,8 +165,7 @@ function sendQuestion() {
     question: {
       image1: correctPerson.image1,
       image2: correctPerson.image2,
-      options,
-      answer: correctPerson.answer
+      options
     },
     time: 15
   });
@@ -187,6 +178,7 @@ app.get("/admin/results", (req, res) => {
   if (!finalResults) {
     return res.json({});
   }
+  console.log("Admin fetched results:", finalResults);
   res.json(finalResults);
 });
 
