@@ -16,7 +16,8 @@ const io = new Server(server, {
 
 let usedPersonIds = new Set();
 let currentCorrectAnswer = null;
-let adminResults = null;
+
+let adminResults = { results: {} };
 
 
 const PORT = process.env.PORT || 3000;
@@ -97,31 +98,6 @@ app.post("/details", (req, res) => {
     message: "Data saved successfully",
     data: newEntry
   });
-});
-
-app.post("/admin/results", (req, res) => {
-  const { gameId, results, submittedAt } = req.body;
-
-  if (!results) {
-    return res.status(400).json({ message: "No results received" });
-  }
-
-  adminResults.push({
-    gameId,
-    results,
-    submittedAt
-  });
-
-  // ⏱ auto-clear after 5 minutes of inactivity
-  // if (clearResultsTimer) clearTimeout(clearResultsTimer);
-
-  // clearResultsTimer = setTimeout(() => {
-  //   adminResults = [];
-  //   console.log("Admin results auto-cleared");
-  // }, 5 * 60 * 1000);
-
-  console.log("Results saved for admin");
-  res.json({ success: true });
 });
 
 
