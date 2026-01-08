@@ -103,7 +103,7 @@ app.post("/details", (req, res) => {
 
 // app.delete("/admin/results", (req, res) => {
 //   adminResults = null;
-//   console.log("Admin cleared all results");
+
 //   res.json({ cleared: true });
 // });
 
@@ -121,14 +121,14 @@ let finalResults = null;
 
 
 io.on("connection", socket => {
-  console.log("Connected:", socket.id);
+
 
   socket.on("registerUser", username => {
     users[socket.id] = {
       username,
       score: 0
     };
-    console.log("User registered:", username);
+
   });
 
   socket.on("startQuiz", () => {
@@ -154,7 +154,7 @@ io.on("connection", socket => {
   });
 
   socket.on("disconnect", () => {
-    console.log("Disconnected:", socket.id);
+
     delete users[socket.id];
   });
 });
@@ -232,5 +232,5 @@ app.delete("/details/:id", (req, res) => {
 
 
 server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  // console.log(`Server running on port ${PORT}`);
 });
