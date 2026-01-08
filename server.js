@@ -16,11 +16,8 @@ const io = new Server(server, {
 
 let usedPersonIds = new Set();
 let currentCorrectAnswer = null;
-let adminResults = [];
 
 const PORT = process.env.PORT || 3000;
-
-
 
 app.use(cors());
 app.use(express.json());
@@ -73,6 +70,8 @@ function writeData(data) {
 }
 
 app.post("/details", (req, res) => {
+  console.log("POST /details hit", req.body);
+
   const { answer, image1, image2, gender } = req.body;
 
   if (!answer || !image1 || !image2 || !gender) {
@@ -98,42 +97,6 @@ app.post("/details", (req, res) => {
   });
 });
 
-app.post("/admin/results", (req, res) => {
-  const { gameId, results, submittedAt } = req.body;
-
-  if (!results) {
-    return res.status(400).json({ message: "No results received" });
-  }
-
-  adminResults.push({
-    gameId,
-    results,
-    submittedAt
-  });
-
-  // ⏱ auto-clear after 5 minutes of inactivity
-  // if (clearResultsTimer) clearTimeout(clearResultsTimer);
-
-  // clearResultsTimer = setTimeout(() => {
-  //   adminResults = [];
-  //   console.log("Admin results auto-cleared");
-  // }, 5 * 60 * 1000);
-
-  console.log("Results saved for admin");
-  res.json({ success: true });
-});
-
-
-app.get("/admin/results", (req, res) => {
-  res.json(adminResults);
-});
-
-
-app.delete("/admin/results", (req, res) => {
-  adminResults = [];
-  console.log("Admin cleared all results");
-  res.json({ cleared: true });
-});
 
 
 app.get("/details", (req, res) => {
@@ -145,6 +108,7 @@ app.get("/details", (req, res) => {
 let currentIndex = 0;
 let timer = null;
 let users = {};
+let finalResults = null;
 
 
 io.on("connection", socket => {
@@ -159,67 +123,69 @@ io.on("connection", socket => {
   });
 
   socket.on("startQuiz", () => {
-    finalResults = null;
-    usedPersonIds.clear();
-    sendQuestion();
-  });
+  currentIndex = 0;
+  finalResults = null;
+  usedPersonIds.clear(); // reset repetition tracking
+  sendQuestion();
+});
+
 
   socket.on("submitAnswer", answer => {
-    if (users[socket.id] && answer === currentCorrectAnswer) {
-      users[socket.id].score += 1;
-    }
-  });
+  if (users[socket.id] && answer === currentCorrectAnswer) {
+    users[socket.id].score += 1;
+  }
+});
 
-  // ✅ ADMIN ENDS QUIZ
-  socket.on("endQuiz", () => {
-    finalResults = users;
-    io.emit("quizEnd", users);
-    console.log("Quiz ended. Final results:", finalResults);
+
+  socket.on("getResults", () => {
+    if (finalResults) {
+      socket.emit("quizResults", finalResults);
+    }
   });
 
   socket.on("disconnect", () => {
     console.log("Disconnected:", socket.id);
+    delete users[socket.id];
   });
 });
-
 
 
 function sendQuestion() {
   const data = readData();
   const people = data.details;
 
-  if (people.length < 2) {
-    console.error("At least 2 entries required");
+  if (people.length < 4) {
+    console.error("At least 4 entries required");
+    return;
+  }
+
+  if (usedPersonIds.size >= people.length) {
+    finalResults = users;
+    io.emit("quizEnd", users);
     return;
   }
 
   const correctPerson = pickCorrectPerson(people);
   usedPersonIds.add(correctPerson.id);
 
-  currentCorrectAnswer = correctPerson.answer;
+  currentCorrectAnswer = correctPerson.answer; // ✅ STORE
 
   const options = generateOptions(correctPerson, people);
 
-  io.emit("newQuestion", {
-    question: {
-      image1: correctPerson.image1,
-      image2: correctPerson.image2,
-      options
-    },
-    time: 15
-  });
+io.emit("newQuestion", {
+  question: {
+    image1: correctPerson.image1,
+    image2: correctPerson.image2,
+    options,
+    answer: correctPerson.answer
+  },
+  time: 15
+});
 
   clearTimeout(timer);
   timer = setTimeout(sendQuestion, 15000);
 }
 
-app.get("/admin/results", (req, res) => {
-  if (!finalResults) {
-    return res.json({});
-  }
-  console.log("Admin fetched results:", finalResults);
-  res.json(finalResults);
-});
 
 
 

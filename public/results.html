@@ -36,19 +36,21 @@
   </table>
 
   <script>
-  const results = JSON.parse(sessionStorage.getItem("quizResults")) || {};
-  const tbody = document.getElementById("resultsBody");
+    const results = JSON.parse(sessionStorage.getItem("quizResults")) || {};
+    const tbody = document.getElementById("resultsBody");
+    console.log("score- >" ,results)
+    for (const user in results) {
+      console.log(user)
+      const row = document.createElement("tr");
 
-  for (const user in results) {
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${results[user].username}</td>
-      <td>${results[user].score}</td>
-    `;
-    tbody.appendChild(row);
-  }
-</script>
+      row.innerHTML = `
+        <td>${results[user].username}</td>
+        <td>${results[user].score}</td>
+      `;
 
+      tbody.appendChild(row);
+    }
+  </script>
 
 </body>
 </html>

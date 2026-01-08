@@ -70,11 +70,5 @@ function Myfunction() {
     })
     .catch(err => console.error("Error:", err));
 
-  // fetch("https://your-backend-name.onrender.com/admin/results")
-  // .then(res => res.json())
-  // .then(data => {
-  //   console.log("Admin Results:", data);
-  // });
-
 }
 
