@@ -19,6 +19,10 @@ let currentCorrectAnswer = null;
 
 const PORT = process.env.PORT || 3000;
 
+let adminResults = [];
+let clearResultsTimer = null;
+
+
 app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
@@ -98,18 +102,32 @@ app.post("/details", (req, res) => {
 app.post("/admin/results", (req, res) => {
   const { gameId, results, submittedAt } = req.body;
 
-  console.log("Admin received results:", results);
+  if (!results) {
+    return res.status(400).json({ message: "No results received" });
+  }
 
-  // Save to DB (MongoDB / PostgreSQL / etc.)
-  // OR temporarily store in memory
+  adminResults.push({
+    gameId,
+    results,
+    submittedAt
+  });
 
+  // ⏱ auto-clear after 5 minutes of inactivity
+  // if (clearResultsTimer) clearTimeout(clearResultsTimer);
+
+  // clearResultsTimer = setTimeout(() => {
+  //   adminResults = [];
+  //   console.log("Admin results auto-cleared");
+  // }, 5 * 60 * 1000);
+
+  console.log("Results saved for admin");
   res.json({ success: true });
 });
 
-app.get("/admin/results", (req, res) => {
-  res.json(savedResults);
-});
 
+app.get("/admin/results", (req, res) => {
+  res.json(adminResults);
+});
 
 
 app.get("/details", (req, res) => {

@@ -36,21 +36,25 @@
   </table>
 
   <script>
-    const results = JSON.parse(sessionStorage.getItem("quizResults")) || {};
-    const tbody = document.getElementById("resultsBody");
-    console.log("score- >" ,results)
-    for (const user in results) {
-      console.log(user)
-      const row = document.createElement("tr");
+  const tbody = document.getElementById("resultsBody");
 
-      row.innerHTML = `
-        <td>${results[user].username}</td>
-        <td>${results[user].score}</td>
-      `;
+  fetch("https://guess-who-amw8.onrender.com/admin/results")
+    .then(res => res.json())
+    .then(data => {
+      data.forEach(entry => {
+        for (const user in entry.results) {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${entry.results[user].username}</td>
+            <td>${entry.results[user].score}</td>
+          `;
+          tbody.appendChild(row);
+        }
+      });
+    })
+    .catch(err => console.error("Admin fetch error:", err));
+</script>
 
-      tbody.appendChild(row);
-    }
-  </script>
 
 </body>
 
