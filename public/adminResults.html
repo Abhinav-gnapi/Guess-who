@@ -26,38 +26,31 @@
 <h1>Admin – Quiz Results</h1>
 
 <table>
-  <thead>
-    <tr>
-      <th>User</th>
-      <th>Score</th>
-    </tr>
-  </thead>
-  <tbody id="resultsBody"></tbody>
-</table>
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Score</th>
+      </tr>
+    </thead>
+    <tbody id="resultsBody"></tbody>
+  </table>
 
-<script src="/socket.io/socket.io.js"></script>
-<script>
-  const socket = io();
-  const tbody = document.getElementById("resultsBody");
-
-  socket.emit("getResults");
-
-  socket.on("quizResults", results => {
-    console.log("Admin results:", results);
-
-    for (const id in results) {
-      const user = results[id];
+  <script>
+    const results = JSON.parse(sessionStorage.getItem("quizResults")) || {};
+    const tbody = document.getElementById("resultsBody");
+    console.log("score- >" ,results)
+    for (const user in results) {
+      console.log(user)
       const row = document.createElement("tr");
 
       row.innerHTML = `
-        <td>${user.username}</td>
-        <td>${user.score}</td>
+        <td>${results[user].username}</td>
+        <td>${results[user].score}</td>
       `;
 
       tbody.appendChild(row);
     }
-  });
-</script>
+  </script>
 
 </body>
 
