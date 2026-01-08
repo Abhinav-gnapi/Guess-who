@@ -142,7 +142,7 @@ body {
   display: flex;
   column-gap: 50px;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 }
 
 #imageContainer img {
